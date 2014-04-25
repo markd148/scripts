@@ -5,20 +5,43 @@ module SkyscapeCF
   
   class Uaa
     def initialize(user,pass,url)
-      @client = RestClient::Resource.new( url)
+      @client = RestClient::Resource.new( url,user,pass)
       
-      login(user , pass)
+      
     end
   
-    def login(user,pass)
-    credentials={:username => user, :password => pass}
-      puts @client['oauth/authorize'].post(credentials.to_json){ |response, request, result, &block|
+    def login
+    query={:response_type => 'code', :client_id => 'login', :client_secret => 'Ax5123re4', :source=> 'login', :redirect_uri=> 'www.google.com', :username => 'tlawrence@skyscapecloud.com' }
+      puts @client['oauth/token'].post(query.to_json, :accept => 'application/json' , :content_type => 'application/json'){ |response, request, result, &block|
         if [301, 302, 307].include? response.code
           response.follow_redirection(request, result, &block)
         else
           response.return!(request, result, &block)
         end
       }
+    end
+    
+    def get_tokens
+      puts @client['oauth/tokens'].get :accept => 'application/json'
+    end
+    
+    def get_auth_code
+      params = {
+      :response_type => 'code',
+      :client_id => 'login',
+      :scope => 'read write password'
+      }
+      
+      puts @client['oauth/authorize?response_type=code&client_id=login&scope=read%20write%20password'].get :accept => :json#  {:params => {:response_type => 'code',:client_id => 'login',:scope => 'read write password'}, :accept => 'application/json'}
+      
+    end
+    
+    def get_clients
+      puts @client['oauth/authorize'].get :accept => 'application/json'
+    end
+    
+    def get_token_key
+      puts @client['token_key'].get :accept => 'application/json'
     end
     
     def authorise_token
