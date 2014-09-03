@@ -1,0 +1,4 @@
+
+source 'https://rubygems.org'
+gem 'cf-uaa-lib', :path => "~/GIT/cf-uaa-lib"
+gem 'rest-client'

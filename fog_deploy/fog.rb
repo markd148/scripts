@@ -10,14 +10,34 @@ class Deploy
       :vcloud_director_host => url,
       :vcloud_director_show_progress => true, # task progress bar on/off
     )
+
+    @org = @vcloud.organizations.first
   end
 
 
+  def configurenetwork()
+    vapp =  @org.vdcs.first.vapps.get_by_name('template')
+    vapp.vms.each do |vm|
+      net = vm.network
 
-  def deployvm(name)
-   catalog = @vcloud.organizations.first.catalogs[1]
-   vdcid = @vcloud.organizations.first.vdcs.first.id
-   networkid = @vcloud.organizations.first.networks[2].id
+      options = {
+        :ip_address_allocation_mode => 'MANUAL',
+	:network_connection_index => "#{net.network_connection_index}",
+	:IpAddress => '172.21.0.1',
+	:is_connected => 1,
+      }      
+	puts vapp.id
+	puts vapp.href
+
+      @vcloud.put_network_connection_system_section_vapp(vapp.id,options)
+
+    end   
+  end
+
+  def deployvm(name,vdc,cat,template,net,ip)
+   catalog = @org.catalogs.get_by_name(cat)
+   vdcid = @org.vdcs.get_by_name(vdc).id
+   networkid = @org.networks.get_by_name(net).id
 
    options = {
      :vdc_id => vdcid,
@@ -25,7 +45,9 @@ class Deploy
      :deploy => true,
      :powerOn => false,
    }
-   catalog.catalog_items[1].instantiate(name,options)
+   item = catalog.catalog_items.get_by_name(template)
+puts item.vapp_template
+   #item.instantiate(name,options)
   end
 
 
@@ -51,7 +73,10 @@ class Deploy
     end
   end
 
-
+def orgbody
+    puts @vcloud.organizations.first.body
+ 
+end
 end
 
 
