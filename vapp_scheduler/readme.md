@@ -34,19 +34,22 @@ http://git-scm.com/book/en/v2/Getting-Started-Installing-Git
 http://buildvirtual.net/install-and-configure-vsphere-powercli-5-x/
 
 <h3>3. Open PowerCLI and clone this repository</h3>
-<code>git clone https://github.com/tlawrence/scripts</code>
+`git clone https://github.com/tlawrence/scripts`
 
 <h3>4. Create a directory to store scripts and config & copy scripts over</h3>
 
-`PowerCLI C:\GIT\scripts> mkdir c:\automation`  
+`PowerCLI C:\GIT\scripts> mkdir c:\automation  
 `PowerCLI C:\GIT\scripts> copy vapp_scheduler\*.ps1 c:\automation`
 
 
 <h3>5. Change directory and create 'creds' subdirectory</h3>
-<code>
-PowerCLI C:\GIT\scripts> cd c:\automation
-PowerCLI C:\GIT\scripts> mkdir creds
-</code>
+
+`PowerCLI C:\GIT\scripts> cd c:\automation  
+PowerCLI C:\GIT\scripts> mkdir creds`
+
 
 <h3>6. Create a scheduled task to run vAppScheduler.ps1 frequently (every 5 minutes is recommended)</h3>
 
+This step will vary based on the version of Windows / PowerCLI you are running. The command will probably need to look something like the following though:
+
+`C:\WINDOWS\system32\windowspowershell\v1.0\powershell.exe -psconsolefile "C:\Program Files (x86)\VMware\Infrastructure\vSphere PowerCLI\vim.psc1" -noexit -command c:\automation\VappScheduler.ps1.ps1`  
