@@ -62,8 +62,8 @@ Config.ps1:
 
 `$credentialstore = "c:\automation\creds"`  
 `$log = "vappcontrol.log"`  
-`$vappfile = "c:\automation\vapplist.csv"` 
-`$mailfromaddress = "admin@yourcompany.com"`   
+`$vappfile = "c:\automation\vapplist.csv"`  
+`$mailfromaddress = "admin@yourcompany.com"`  
 `$mailserver = "smtp.yourcompany.local"`  
 `$vcloudaddress = "api.vcd.yourcloud.com"`   
 `$notifyerrors = $true`
@@ -82,4 +82,11 @@ Enter Credentials`
 A file named '1-129-2-6sd32.cred' will be saved in the 'creds' directory
 
 
+<h2>Configuring vApps for a schedule</h2>
+The main script looks for a csv file called 'vapplist.csv'. This file contains a list of vApps, the time they should be powered on and the time they should be powered off. The script then calculates the expected status of the vApp at any particular time and issues commands to vCloud Director to ensure the correct status is applied.
 
+The file should take the following format (example in GIT repo):  
+`vappName          , timeOn , timeOff ,     notifyEmail      ,    orgId`  
+`testvapp1         , 07:20  ,  08:20  , tlawrence@github.com , 000-ff-097f6`  
+`testvapp2         , 00:00  ,  23:59  , tlawrence@github.com , 000-ff-097f6`  
+`vapp_in_other_org , 10:00  ,  11:00  , tlawrence@github.com , 1-1-1-a356h`
