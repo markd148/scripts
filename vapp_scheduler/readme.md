@@ -52,4 +52,19 @@ PowerCLI C:\GIT\scripts> mkdir creds`
 
 This step will vary based on the version of Windows / PowerCLI you are running. The command will probably need to look something like the following though:
 
-`C:\WINDOWS\system32\windowspowershell\v1.0\powershell.exe -psconsolefile "C:\Program Files (x86)\VMware\Infrastructure\vSphere PowerCLI\vim.psc1" -noexit -command c:\automation\VappScheduler.ps1.ps1`  
+`C:\WINDOWS\system32\windowspowershell\v1.0\powershell.exe -psconsolefile "C:\Program Files (x86)\VMware\Infrastructure\vSphere PowerCLI\vim.psc1" -noexit -command c:\automation\VappScheduler.ps1`  
+
+<h2>Saving credentials for vCloud Orgs</h3>
+Each vCloud Org which contains VMs to schedule will need a set of credentials saving. The script 'SaveCredentials.ps1' is provided to securely capture credentials to the 'creds' directory
+
+SaveCredentials.ps1 should be run from a Powershell Prompt. The script will prompt you to enter the orgid (eg 000-ff-0976). Once you have entered the orgid the script will display a credentials dialogue box. In username enter the API username as viewable in the top right hand corner of Skyscape Portal under your username and the API button. The password is the same as your Skyscape Portal login password.
+
+`PowerCLI C:\automation>SaveCredentials.ps1  
+Enter Org ID
+1-129-2-6sd32
+Enter Credentials`
+
+A file named '1-129-2-6sd32.cred' will be saved in the 'creds' directory
+
+
+
