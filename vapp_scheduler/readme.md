@@ -36,5 +36,17 @@ http://buildvirtual.net/install-and-configure-vsphere-powercli-5-x/
 <h3>3. Open PowerCLI and clone this repository</h3>
 <code>git clone https://github.com/tlawrence/scripts</code>
 
-<h3>4. Browse to the 'vapp_scheduler' directory</h3>
-<code>PowerCLI C:\GIT\scripts> cd .\vapp_scheduler</code>
+<h3>4. Create a directory to store scripts and config & copy scripts over</h3>
+<code>
+PowerCLI C:\GIT\scripts> mkdir c:\automation
+PowerCLI C:\GIT\scripts> copy vapp_scheduler\*.ps1 c:\automation
+</code>
+
+<h3>5. Change directory and create 'creds' subdirectory</h3>
+<code>
+PowerCLI C:\GIT\scripts> cd c:\automation
+PowerCLI C:\GIT\scripts> mkdir creds
+</code>
+
+<h3>6. Create a scheduled task to run vAppScheduler.ps1 frequently (every 5 minutes is recommended)</h3>
+
