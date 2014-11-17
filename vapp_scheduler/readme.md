@@ -17,12 +17,13 @@ The script operates at a vApp level. This means that all VMs in the vApp will be
 
 <h2>Requirements</h2>
 
+<ul>
 <li>A Tiny Windows VM which supports running PowerShell scripts</li>
 <li>VMware PowerCLI  5.0 or later</li>
 <li>Login Credentials for each vCloud Organization hosting VMs you wish to automate</li>
 <li>The vAppScheduler.ps1 script</li>
 <li>The SaveCredentials.ps1 script</li>
-
+</ul>
 
 <h2>Getting Started:</h2>
 
