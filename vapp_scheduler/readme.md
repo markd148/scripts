@@ -56,18 +56,18 @@ This step will vary based on the version of Windows / PowerCLI you are running. 
 
 <h3>7. Configure global script settings</h3>
 
-The VappScheduler.ps1 script reads a file called 'config.ps1' when it runs. This sets global settings such as email settings for notifications etc. An example file is available in this git repository. this file needs to be created and configured. The VappScheduler.ps1 script expects to find it in the local directory
+The VappScheduler.ps1 script reads a file called 'config.ps1' when it runs. This configures global settings such as mail server for notifications etc. An example file is available in this git repository. this file needs to be created and configured. The VappScheduler.ps1 script expects to find it in the local directory
 
-Config.ps1:
-`
-  $credentialstore = "c:\automation\creds"  
-  $log = "vappcontrol.log"  
-  $vappfile = "c:\automation\vapplist.csv"  
-  $mailfromaddress = "admin@yourcompany.com"  
-  $mailserver = "smtp.yourcompany.local"  
-  $vcloudaddress = "api.vcd.yourcloud.com"  
-  $notifyerrors = $true
-`
+Config.ps1:  
+
+`$credentialstore = "c:\automation\creds"`  
+`$log = "vappcontrol.log"`  
+`$vappfile = "c:\automation\vapplist.csv"` 
+`$mailfromaddress = "admin@yourcompany.com"`   
+`$mailserver = "smtp.yourcompany.local"`  
+`$vcloudaddress = "api.vcd.yourcloud.com"`   
+`$notifyerrors = $true`
+
 
 <h2>Saving credentials for vCloud Orgs</h2>	
 Each vCloud Org which contains VMs to schedule will need a set of credentials saving. The script 'SaveCredentials.ps1' is provided to securely capture credentials to the 'creds' directory
