@@ -1,4 +1,5 @@
 require 'faraday'
+require 'faraday_middleware'
 require 'json'
 
 class Portal
@@ -7,11 +8,13 @@ class Portal
     @resource = Faraday.new(:url => "https://#{host}", :ssl => {:verify => false}) do |c|
       c.use Faraday::Adapter::NetHttp     # perform requests with Net::HTTP
       c.use Faraday::Response::Logger
+      c.request :json 
     end
     
     @resource.headers = {'Accept' => 'application/json', 'Content-Type' => 'application/json'}
     cookies = login(user,pass)
     @resource.headers['Cookie'] = cookies
+    
     
 
   end
@@ -41,6 +44,7 @@ class Portal
     data = {prob_type => { :problem_area => prob_area, :service => service_name, :classification => classification, :summary => summary, :further_details => detail}}.to_json
     puts data
     res = @resource.post '/api/my_calls' , data
+    puts res.body
     res.status
   end
   

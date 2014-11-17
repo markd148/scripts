@@ -3,15 +3,17 @@ require 'rest-client'
 require 'json'
 
 class Report
-  def initialize (domain, user, pass,client)
+  def initialize (domain, user, pass,client, http_opts=nil)
     @uaa_url = "https://uaa.#{domain}"
     @api_url = "https://api.#{domain}"
-    @token = get_token(user,pass,client)
+    http_opts = {} unless http_opts
+    @token = get_token(user,pass,client,http_opts)
   end
 
 
-  def get_token(user,pass,client)
-    token_issuer = CF::UAA::TokenIssuer.new(@uaa_url, client)
+  def get_token(user,pass,client,http_opts=nil)
+
+    token_issuer = CF::UAA::TokenIssuer.new(@uaa_url, client, nil, http_opts)
 
 
     token = token_issuer.implicit_grant_with_creds({username: user, password: pass},nil,@uaa_url)

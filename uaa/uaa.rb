@@ -28,11 +28,11 @@ module SkyscapeCF
     def get_auth_code
       params = {
       :response_type => 'code',
-      :client_id => 'login',
+      :client_id => 'servicesmgmt',
       :scope => 'read write password'
       }
       
-      puts @client['oauth/authorize?response_type=code&client_id=login&scope=read%20write%20password'].get :accept => :json#  {:params => {:response_type => 'code',:client_id => 'login',:scope => 'read write password'}, :accept => 'application/json'}
+      puts @client['oauth/authorize?response_type=code&client_id=servicesmgmt &scope=read%20write%20password'].get :accept => :json#  {:params => {:response_type => 'code',:client_id => 'login',:scope => 'read write password'}, :accept => 'application/json'}
       
     end
     
