@@ -37,10 +37,10 @@ http://buildvirtual.net/install-and-configure-vsphere-powercli-5-x/
 <code>git clone https://github.com/tlawrence/scripts</code>
 
 <h3>4. Create a directory to store scripts and config & copy scripts over</h3>
-<code>
-PowerCLI C:\GIT\scripts> mkdir c:\automation
-PowerCLI C:\GIT\scripts> copy vapp_scheduler\*.ps1 c:\automation
-</code>
+
+`PowerCLI C:\GIT\scripts> mkdir c:\automation`
+`PowerCLI C:\GIT\scripts> copy vapp_scheduler\*.ps1 c:\automation`
+
 
 <h3>5. Change directory and create 'creds' subdirectory</h3>
 <code>
