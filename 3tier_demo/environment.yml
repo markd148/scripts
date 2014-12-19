@@ -12,6 +12,7 @@ vapp:
     dns: 8.8.8.8
   vms:
   - name: web
+    quantity: 1
     external: 10.0.1.50
     gateway: 172.21.1.1
     rules:
@@ -22,6 +23,7 @@ vapp:
       source: any
       port: 443
   - name: app
+    quantity: 1
     external: 10.0.1.51
     gateway: 172.21.2.1
     rules:
@@ -29,6 +31,7 @@ vapp:
       source: 172.21.1.0/24
       port: 8080
   - name: db
+    quantity: 1
     external: 10.0.1.52
     gateway: 172.21.3.1
     rules:

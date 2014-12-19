@@ -28,7 +28,7 @@ module Deployment
       unless vapp then 
         return false
       else
-        vapp.id
+        vapp
       end
       
       
@@ -51,14 +51,63 @@ module Deployment
     
     def create_or_update_vapp(name,vdcname, parentnet, vappnets, bastion_ip)
     
-      vappid =  vappexists?(name,vdcname)
-      if vappid then 
+      vapp =  vappexists?(name,vdcname)
+      if vapp then 
         puts "Updating vApp #{name}"
-        update_vapp(name,vdcname, parentnet, vappnets, bastion_ip, vappid)
+        update_vapp(name,vdcname, parentnet, vappnets, bastion_ip, vapp.id)
       else
         puts "Creating vApp #{name}"
         create_vapp(name,vdcname, parentnet, vappnets, bastion_ip)
       end
+      
+      
+      puts 'Checking VM Counts For Each Tier'
+      adjustments = calculate_adjustments(vapp,name,vappnets)
+      total_new_vms = 0
+      adjustments.each do |k,v|
+        if v > 0 then
+          total_new_vms += v
+        end
+      end
+      
+      create_spare_vms(total_new_vms,vdcname)
+      
+    end
+    
+    def create_spare_vms(quantity, vdcname)
+      puts "Creating #{quantity} new vms"
+    end
+    
+    def calculate_adjustments(vapp, name, tiernames)
+      actual_count = connected_vms(vapp,name)
+      adjustments = {}
+      tiernames.each do |net|
+        name = net['name']
+        delta = net['quantity'] - actual_count[name]
+        
+        puts "Tier: #{name}\n  Desired #vms: #{net['quantity']}\n  Actual #vms: #{actual_count[name]}\n  Delta: #{delta}\n"
+        
+        adjustments[name] = delta
+        
+      end
+      
+      adjustments
+    end
+        
+    def connected_vms(vapp, netname)
+      actual = {}
+      vapp.network_config.each do |config|
+        connections = config[:Configuration][:IpScopes][:IpScope][:AllocatedIpAddresses]
+        if connections then
+          count = connections.count
+        else
+          count = 0
+        end
+        
+        actual[config[:networkName]] = count
+        
+      end
+      actual
     end
     
     def update_vapp(name,vdcname, parentnet, vappnets, bastion_ip, vappid)
